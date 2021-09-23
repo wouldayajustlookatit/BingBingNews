@@ -72,7 +72,7 @@ class BingBingNews:
 
                     else:
                         news_search = news_search.append(results,ignore_index = True)
-                        time.sleep(.5)
+                        time.sleep(.01)
                 except Exception as error:
                     print(error)
             return news_search
