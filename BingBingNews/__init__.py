@@ -35,7 +35,7 @@ class BingBingNews:
         except Exception as error:
             print(f'cant get data from endpoint..exception: {error}')
 
-    def news_search(self,query:str,since:datetime.datetime=None,sortBy:str='Date',region='en-US',count:int=100,offset:int=0,allResults:bool=False):
+    def news_search(self,query:str,since:datetime.datetime=None,sortBy:str='Date',region='en-US',count:int=100,offset:int=0,allResults:bool=False,wait:bool=False):
         # https://docs.microsoft.com/en-us/bing/search-apis/bing-news-search/overview
         # try to parse vars
         try:
@@ -62,11 +62,14 @@ class BingBingNews:
                     results = self._get_new_search(search)
                     if self.res.status_code == 429:
                         wait_time = dict(self.res.headers).get('Retry-After')
-                        if isinstance(wait_time,int):
+                        if wait and isinstance(wait_time,int):
                             print(f'API called too often need to wait {wait_time} secs to retry')
                             print(f'sleeping {wait_time} secs to retry')
                             for sleep in tqdm(wait_time):
                                 time.sleep(sleep)
+                        else:
+                            return news_search
+
                     else:
                         news_search = pd.concat([results,news_search],axis=1)
                         time.sleep(.5)
