@@ -54,9 +54,11 @@ class BingBingNews:
         else:
             news_search = self._get_new_search(search)
             totalhits = self.res.json()['totalEstimatedMatches']
-            while count < totalhits:
-                count += count
+            for countUP in tqdm(count, totalhits, count):
+                count += countUP
+                print(f'pass {count} of {totalhits}')
                 try:
+                    search['offset'] = count
                     results = self._get_new_search(search)
                     if self.res.status_code == 429:
                         wait_time = dict(self.res.headers).get('Retry-After')
@@ -70,7 +72,6 @@ class BingBingNews:
                         time.sleep(.5)
                 except Exception as error:
                     print(error)
-                    break
             return news_search
 
 
