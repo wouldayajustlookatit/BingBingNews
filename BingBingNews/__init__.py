@@ -54,6 +54,7 @@ class BingBingNews:
         else:
             news_search = self._get_new_search(search)
             totalhits = self.res.json()['totalEstimatedMatches']
+            break_counter = 0
             for countUP in tqdm(range(count, totalhits, count)):
                 count += countUP
                 print(f'pass {count} of {totalhits}')
@@ -71,8 +72,15 @@ class BingBingNews:
                             return news_search
 
                     else:
-                        news_search = news_search.append(results,ignore_index = True)
-                        time.sleep(.01)
+                        if isinstance(results,pd.DataFrame):
+                            news_search = news_search.append(results,ignore_index = True)
+                            time.sleep(.01)
+                        else:
+                            break_counter+=1
+                            if break_counter >= 10:
+                                print('data spoiled')
+                                return news_search
+
                 except Exception as error:
                     print(error)
             return news_search
