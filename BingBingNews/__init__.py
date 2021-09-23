@@ -54,7 +54,7 @@ class BingBingNews:
         else:
             news_search = self._get_new_search(search)
             totalhits = self.res.json()['totalEstimatedMatches']
-            for countUP in tqdm(count, totalhits, count):
+            for countUP in tqdm(range(count, totalhits, count)):
                 count += countUP
                 print(f'pass {count} of {totalhits}')
                 try:
