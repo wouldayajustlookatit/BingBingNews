@@ -1,5 +1,4 @@
 import time
-
 import requests
 import json
 import pandas as pd
@@ -7,7 +6,7 @@ import datetime
 
 from tqdm import tqdm
 
-
+# todo: need to add an automatical gitignore
 class BingBingNews:
     '''query parameters located at https://docs.microsoft.com/en-us/bing/search-apis/bing-news-search/reference/query-parameters'''
     def __init__(self,subscription_key):
