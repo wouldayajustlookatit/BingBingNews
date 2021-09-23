@@ -71,7 +71,7 @@ class BingBingNews:
                             return news_search
 
                     else:
-                        news_search = pd.concat([results,news_search],axis=1)
+                        news_search = news_search.append(results,ignore_index = True)
                         time.sleep(.5)
                 except Exception as error:
                     print(error)
